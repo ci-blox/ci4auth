@@ -4,6 +4,14 @@ use CodeIgniter\Config\BaseConfig;
 
 class App extends BaseConfig
 {
+	// the menu basics (top navbar)
+	public $menuChoices = array (
+		'menudata' => array (
+			array ('name' => '<span class="glyphicon glyphicon-home"></span>', 'link' => '/'),
+			array ('name' => 'Documentation', 'link' => 'https://www.codeigniter.com/user_guide'),
+			array ('name' => 'Login', 'link' => '/ci4gate/public/index.php/secure')
+		)
+	);
 
 	/*
 	|--------------------------------------------------------------------------
@@ -21,7 +29,7 @@ class App extends BaseConfig
 	| environments.
 	|
 	*/
-	public $baseURL = '';
+	public $baseURL = 'http://localhost:8000';
 
 	/*
 	|--------------------------------------------------------------------------
