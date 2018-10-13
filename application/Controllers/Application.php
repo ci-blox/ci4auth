@@ -17,12 +17,11 @@ class Application extends \CodeIgniter\Controller
     /**
 	 * Constructor
 	 */
-	function __construct(...$params)
+	function __construct()
 	{
 		$this::init();
 	}
 	function init() {
-	//parent::__construct(...$params);
 		$this->loader = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 		$this->viewsDir = __DIR__.'/Views';
 		$this->config = new \Config\App();
@@ -32,7 +31,12 @@ class Application extends \CodeIgniter\Controller
 
 		if ($this->isSecure)
 		{
-			$dbh = new \PDO("mysql:host=localhost;dbname=ci4", "root", "");
+			// Use PDO, assume default db, you can change if not 
+			$dbconfig = new \Config\Database();
+			$dsn = $dbconfig->default['dsn'];
+			$user = $dbconfig->default['username'];
+			$pass = $dbconfig->default['password'];
+			$dbh = new \PDO($dsn, $user, $pass);
 
 			$this->authconfig = new PHPAuthConfig($dbh);
 			$this->auth = new PHPAuth($dbh, $this->authconfig);

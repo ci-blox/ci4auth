@@ -28,12 +28,12 @@ class Database extends \CodeIgniter\Database\Config
 	 * @var array
 	 */
 	public $default = [
-		'DSN'          => '',
+		'DSN'          => 'mysql:host=localhost; dbname=ci4auth; charset=utf8;',
 		'hostname'     => 'localhost',
-		'username'     => '',
+		'username'     => 'root',
 		'password'     => '',
 		'database'     => '',
-		'DBDriver'     => 'MySQLi',
+		'DBDriver'     => 'PDO',
 		'DBPrefix'     => '',
 		'pConnect'     => false,
 		'DBDebug'     => (ENVIRONMENT !== 'production'),

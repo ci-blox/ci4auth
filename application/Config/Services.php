@@ -2,6 +2,8 @@
 
 use CodeIgniter\Config\Services as CoreServices;
 use CodeIgniter\Config\BaseConfig;
+use PHPAuth\Config as PHPAuthConfig;
+use PHPAuth\Auth as PHPAuth;
 
 require_once BASEPATH.'Config/Services.php';
 
@@ -30,6 +32,30 @@ class Services extends CoreServices
 //
 //        return new \CodeIgniter\Example();
 //    }
+
+//
+// Authentication model using PHPAuth
+//
+public static function authenticator(PHPAuthConfig $authenticatorconfig = null, bool $getShared = true)
+{
+    if ($getShared)
+    {
+        return self::getSharedInstance('authenticator');
+    }
+    
+    if (empty($authenticatorconfig)) {
+        // Use PDO, assume default db
+        $dbconfig = new \Config\Database();
+        $dsn = $dbconfig->default['dsn'];
+        $user = $dbconfig->default['username'];
+        $pass = $dbconfig->default['password'];
+        $dbh = new \PDO($dsn, $user, $pass);
+
+        $authenticatorconfig = new PHPAuthConfig($dbh);
+    }
+    $authenticator = new PHPAuth($dbh, $authenticatorconfig);
+    return $authenticator;
+}
 
     public static function honeypot(BaseConfig $config = null, $getShared = true)
     {

@@ -6,7 +6,7 @@ class Secure extends Application
 	/**
 	 * Constructor
      */
-	public function __construct(...$params)
+	public function __construct()
     {
 		$this->isSecure = true;
         parent::init();
@@ -29,9 +29,9 @@ public function login()
 	$password = false;
 	$rememberme = false;
 	if (isset($_POST['username'])) {
-		// Tip: do validation here!
-		$email = filter_var($_POST["username"], FILTER_SANITIZE_STRING);
-		$password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
+		// TODO do validation here
+		$email = filter_var($this->request->getPost('username'), FILTER_SANITIZE_STRING);
+		$password = filter_var($this->request->getPost('password'), FILTER_SANITIZE_STRING);
 		$rememberme = filter_var(isset($_POST["remember"]));
 		
 		$result = $this->auth->login($email, $password, $rememberme);
@@ -72,10 +72,10 @@ public function login()
 				return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 			}
 	
-			$firstname = filter_var($_POST["first_name"], FILTER_SANITIZE_STRING);
-            $lastname = filter_var($_POST["last_name"], FILTER_SANITIZE_STRING);
-            //$username = filter_var($_POST["username"], FILTER_SANITIZE_STRING);
-			$email = $this->request->getPost('email');
+			$firstname = filter_var($this->request->getPost('first_name'), FILTER_SANITIZE_STRING);
+			$lastname = filter_var($this->request->getPost('last_name'), FILTER_SANITIZE_STRING);
+            //$username = filter_var($this->request->getPost('username'), FILTER_SANITIZE_STRING);
+			$email = filter_var($this->request->getPost('email'), FILTER_SANITIZE_EMAIL);
 			$password = $this->request->getPost('password');
 			$terms = filter_var(isset($_POST["terms"]));
             //$key = $_POST['g-recaptcha-response'];
@@ -113,7 +113,7 @@ public function login()
 		$this->data = array();
 		$email = false;
 		if (isset($_POST['username'])) {		
-			$email = filter_var($_POST["username"], FILTER_SANITIZE_STRING);	
+			$email = filter_var($this->request->getPost('username'), FILTER_SANITIZE_STRING);	
 			$result = $this->auth->requestReset($email);			
 			if($result['error']) {
 				// Something went wrong, display error message
