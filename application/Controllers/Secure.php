@@ -22,7 +22,11 @@ class Secure extends Application
 	
 }
 
-//--------------------------------------------------------------------
+/**
+ * login
+ *
+ * @return void
+ */
 public function login()
 {
 	$email = false;
@@ -32,14 +36,14 @@ public function login()
 		// TODO do validation here
 		$email = filter_var($this->request->getPost('username'), FILTER_SANITIZE_STRING);
 		$password = filter_var($this->request->getPost('password'), FILTER_SANITIZE_STRING);
-		$rememberme = filter_var(isset($_POST["remember"]));
+		$rememberme = (bool)($this->request->getPost('remember'));
 		
 		$result = $this->auth->login($email, $password, $rememberme);
 		if($result['error']) {
 			// Something went wrong, display error message
 			$this->data['viewdata'] = array();
 			$this->data['viewdata']['msg'] = $result['message'];
-			$this->data['pagetitle'] = 'CodeIgniter 4 Demo Login<br>id demo pw test1';
+			$this->data['pagetitle'] = 'Login - CodeIgniter 4 Demo';
 			return view('secure/login', $this->data);				
 		} else {
 			// Logged in successfully, set cookie, display success message
@@ -53,6 +57,12 @@ public function login()
 			$this->data['pagetitle'] = 'CodeIgniter 4 Demo Secure Area';
 			return view('secure/login', $this->data);
 		}
+		
+		/**
+		 * register
+		 *
+		 * @return void
+		 */
 		public function register()
 		{
 			$this->data = array();
@@ -77,7 +87,8 @@ public function login()
             //$username = filter_var($this->request->getPost('username'), FILTER_SANITIZE_STRING);
 			$email = filter_var($this->request->getPost('email'), FILTER_SANITIZE_EMAIL);
 			$password = $this->request->getPost('password');
-			$terms = filter_var(isset($_POST["terms"]));
+			$confirm_password = $this->request->getPost('confirm_password');
+			$terms =  (bool)($this->request->getPost('terms'));
             //$key = $_POST['g-recaptcha-response'];
             //$params = array("firstName" => "{$firstname}", "lastName" => "{$lastname}", "username" => "{$username}", "type" => '1');
             $params = array("firstName" => "{$firstname}", "lastName" => "{$lastname}");
@@ -108,7 +119,13 @@ public function login()
 //    secure/register';
 
     }
-    public function forgot()
+
+	/**
+	 * forgot
+	 *
+	 * @return void
+	 */
+	public function forgot()
     {
 		$this->data = array();
 		$email = false;
@@ -129,5 +146,34 @@ public function login()
 		}
 	   $this->data['pagetitle'] = 'CodeIgniter 4 Demo Secure Area';
         return view('secure/forgot', $this->data);
+	}
+	
+	/**
+	 * changepassword
+	 *
+	 * @return void
+	 */
+	public function changepassword()
+    {
+		$this->data = array();
+		$this->data['pagetitle'] = 'Change Password - CodeIgniter 4 Demo';
+        if (isset($_POST['password'])) {
+            $uid = $this->auth->getSessionUID($this->auth->getSessionHash());
+            $oldpassword = $this->request->getPost('old_password');
+            $password = $this->request->getPost('password');
+            $confirm_password = $this->request->getPost('confirm_password');
+            $result = $this->auth->changePassword($uid, $oldpassword, $password, $confirm_password);
+			if($result['error']) {
+				// Something went wrong, display error message
+				$this->data['viewdata'] = array();
+				$this->data['viewdata']['msg'] = $result['message'];
+				return view('secure/changepassword', $this->data);	
+			}
+			else
+			{
+				redirect()->to('/secure/login');
+			}
+		}
+        return view('secure/changepassword', $this->data);
     }
 }
