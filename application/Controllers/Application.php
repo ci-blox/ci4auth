@@ -33,7 +33,7 @@ class Application extends \CodeIgniter\Controller
 		{
 			// Use PDO, assume default db, you can change if not 
 			$dbconfig = new \Config\Database();
-			$dsn = $dbconfig->default['dsn'];
+			$dsn = $dbconfig->default['DSN'];
 			$user = $dbconfig->default['username'];
 			$pass = $dbconfig->default['password'];
 			$dbh = new \PDO($dsn, $user, $pass);

@@ -46,7 +46,7 @@ public static function authenticator(PHPAuthConfig $authenticatorconfig = null, 
     if (empty($authenticatorconfig)) {
         // Use PDO, assume default db
         $dbconfig = new \Config\Database();
-        $dsn = $dbconfig->default['dsn'];
+        $dsn = $dbconfig->default['DSN'];
         $user = $dbconfig->default['username'];
         $pass = $dbconfig->default['password'];
         $dbh = new \PDO($dsn, $user, $pass);
