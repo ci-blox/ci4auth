@@ -129,7 +129,7 @@ if ($vmsg) :
         	<input type="email" class="form-control" name="email" placeholder="Email" required="required"  <?php echo isset($_POST['email'])?"value=\"".$_POST['email'].'"':'';?> >
         </div>
 		<div class="form-group">
-            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required="required">
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required="required"  autocomplete="new-password">
 			<meter max="4" id="password-strength-meter"></meter><p id="password-strength-text"></p>
         </div>
 		<div class="form-group">
@@ -146,6 +146,7 @@ if ($vmsg) :
 	<div class="text-center actionlinks">Already have an account? <a href="/secure/login">Log in</a></div>
 	</p>
 </div>
+<script type='text/javascript' src="/assets/js/zxcvbn.js" ></script>
 <script type='text/javascript'>
 var strength = {
   0: "Worst",
@@ -167,7 +168,7 @@ password.addEventListener('input', function() {
 
   // Update the text indicator
   if (val !== "") {
-    text.innerHTML = "Strength: " + strength[result.score]; 
+    text.innerHTML = "Password Strength: " + strength[result.score]; 
   } else {
     text.innerHTML = "";
   }

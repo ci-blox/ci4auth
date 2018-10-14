@@ -9,6 +9,7 @@ use PHPAuth\Auth as PHPAuth;
  */
 class Application extends \CodeIgniter\Controller
 {
+	protected $session; // session
 	protected $data = array (); // parameters for view components
 	protected $id;   // identifier for our content
 	protected $isSecure = false; // set to true if login needed
@@ -21,7 +22,15 @@ class Application extends \CodeIgniter\Controller
 	{
 		$this::init();
 	}
+	
+	/**
+	 * init
+	 *
+	 * @return void
+	 */
 	function init() {
+		$this->session = \Config\Services::Session();
+
 		$this->loader = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 		$this->viewsDir = __DIR__.'/Views';
 		$this->config = new \Config\App();
@@ -31,15 +40,9 @@ class Application extends \CodeIgniter\Controller
 
 		if ($this->isSecure)
 		{
-			// Use PDO, assume default db, you can change if not 
-			$dbconfig = new \Config\Database();
-			$dsn = $dbconfig->default['DSN'];
-			$user = $dbconfig->default['username'];
-			$pass = $dbconfig->default['password'];
-			$dbh = new \PDO($dsn, $user, $pass);
-
-			$this->authconfig = new PHPAuthConfig($dbh);
-			$this->auth = new PHPAuth($dbh, $this->authconfig);
+			// Use the new Services feature (see Services.php)
+			// (Uses PDO and default db)
+			$this->auth = \Config\Services::authenticator();
 								
 		}
 	}

@@ -47,8 +47,11 @@ public function login()
 			return view('secure/login', $this->data);				
 		} else {
 			// Logged in successfully, set cookie, display success message
-			setcookie($this->authconfig->cookie_name, $result['hash'], $result['expire'], 
-			$this->authconfig->cookie_path, $this->authconfig->cookie_domain, $this->authconfig->cookie_secure, $this->authconfig->cookie_http);
+		
+			$cfg = new \Config\Authenticator();			
+			$authconfig = (object)$cfg->authconfig;			
+			setcookie($authconfig->cookie_name, $result['hash'], $result['expire'], 
+			$authconfig->cookie_path, $authconfig->cookie_domain, $authconfig->cookie_secure, $authconfig->cookie_http);
 			$this->data['pagetitle'] = 'CodeIgniter 4 Demo Secure Area';
 			$this->data['pagebody'] = 'welcome_secure';
 			$this->render();

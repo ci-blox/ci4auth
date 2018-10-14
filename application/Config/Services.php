@@ -36,7 +36,7 @@ class Services extends CoreServices
 //
 // Authentication model using PHPAuth
 //
-public static function authenticator(PHPAuthConfig $authenticatorconfig = null, bool $getShared = true)
+public static function authenticator(bool $getShared = true, PHPAuthConfig $authenticatorconfig = null)
 {
     if ($getShared)
     {
@@ -51,9 +51,10 @@ public static function authenticator(PHPAuthConfig $authenticatorconfig = null, 
         $pass = $dbconfig->default['password'];
         $dbh = new \PDO($dsn, $user, $pass);
 
-        $authenticatorconfig = new PHPAuthConfig($dbh);
+        $authenticatorconfig = new \Config\Authenticator();
+        $phpauthcfg = new PHPAuthConfig($dbh, 'array', $authenticatorconfig->authconfig);
     }
-    $authenticator = new PHPAuth($dbh, $authenticatorconfig);
+    $authenticator = new PHPAuth($dbh, $phpauthcfg);
     return $authenticator;
 }
 
