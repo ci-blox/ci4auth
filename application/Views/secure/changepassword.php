@@ -1,4 +1,3 @@
-<?php echo view("theme/header", array('pagetitle'=>$pagetitle, 'endofheader'=>'')); ?>
 <style type="text/css">
 	body{
 		color: #fff;
@@ -71,38 +70,51 @@
 	.signup-form form a:hover{
 		text-decoration: underline;
 	}  
-	.signup-form meter {
-  /* Reset the default appearance */
+
+meter {
+    /* Reset the default appearance */
+    /*-webkit-appearance: none;*/
+       -moz-appearance: none;
+            appearance: none;
+
+    margin: 0 auto 0.8em;
+    width: 100%;
+    height: .5em;
+
+    /* Applicable only to Firefox */
+    background: none;
+    background-color: rgba(0,0,0,0.1);
+}
+
+meter.no-appearance {
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-
-  margin: 0 auto 1em;
-  width: 100%;
-  height: 0.5em;
-
-  /* Applicable only to Firefox */
-  background: none;
-  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.signup-form meter::-webkit-meter-bar {
-  background: none;
-  background-color: rgba(0, 0, 0, 0.1);
+meter::-webkit-meter-bar {
+    background: none;
+    background-color: rgba(0,0,0,0.1);
 }
+	
 #Styling the meter value
-/* Webkit based browsers */
 meter[value="1"]::-webkit-meter-optimum-value { background: red; }
 meter[value="2"]::-webkit-meter-optimum-value { background: yellow; }
 meter[value="3"]::-webkit-meter-optimum-value { background: orange; }
 meter[value="4"]::-webkit-meter-optimum-value { background: green; }
 
-/* Gecko based browsers */
 meter[value="1"]::-moz-meter-bar { background: red; }
 meter[value="2"]::-moz-meter-bar { background: yellow; }
 meter[value="3"]::-moz-meter-bar { background: orange; }
 meter[value="4"]::-moz-meter-bar { background: green; }
 
+#password {margin-top:-1.3em}
+
+#password-strength-text {
+	float: right;
+    margin-top: -35px;
+    margin-right: 8px;
+    text-transform: uppercase;
+    font-size: 9px;
+}
 </style>
 </head>
 <body>
@@ -121,9 +133,10 @@ if ($vmsg) :
             <input type="password" class="form-control" name="old_password" placeholder="Current Password" required="required" autofocus>
         </div>        
 		<div class="form-group">
-            <input type="password" class="form-control" name="password" id="password" placeholder="New Password" required="required">
-			<meter max="4" id="password-strength-meter"></meter><p id="password-strength-text"></p>
-        </div>
+			<meter max="4" id="password-strength-meter"></meter>
+            <input type="password" class="form-control" name="password" id="password" placeholder="New Password" required="required" autocomplete="off" />
+			<p id="password-strength-text"></p> 
+       </div>
 		<div class="form-group">
             <input type="password" class="form-control" name="confirm_password" placeholder="Confirm New Password" required="required">
         </div>        
@@ -134,9 +147,10 @@ if ($vmsg) :
 	<p>
 	</p>
 </div>
+<script type='text/javascript' src="/assets/js/zxcvbn.js" ></script>
 <script type='text/javascript'>
 var strength = {
-  0: "Worst",
+  0: "Very Poor",
   1: "Bad",
   2: "Weak",
   3: "Good",

@@ -1,24 +1,15 @@
 <div class="container">
-<div class="navbar navbar-default navbar-fixed-top" id="mainnav" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">CodeIgniter Demo</a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-<?php
+<nav class="navbar navbar-expand-lg navbar-dark" style="background:#605c63a6">
+  <a class="navbar-brand" href="#">Secure Area</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+    <?php
 foreach ($menudata as $key => $value) {
-    $link = ($value['link']=='/') ? base_url() : ($value['link']) 
-?><li class="<?=$value['active']?>"><a href="<?=$value['link']?>"><?=$value['name']?></a></li>
-<?php } ?>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</div>
-</div>
+    $link = ($value['link'] == '/') ? base_url() : ($value['link'])
+    ?><li class="<?=$value['active']?>"><a href="<?=$value['link']?>"><?=$value['name']?></a></li>
+<?php }?>
+  </ul></div>
+</nav>

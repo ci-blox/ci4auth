@@ -1,3 +1,10 @@
 body {
     background-image: url('/assets/img/bg.jpg');
 }
+.navbar a:active, .navbar a:link, .navbar a:visited {
+    color: #ccdfdf;
+    margin-right: 15px;
+}
+#content, #content h1, #content h2 {
+    color: #333;
+}

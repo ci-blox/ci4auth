@@ -8,9 +8,9 @@ class App extends BaseConfig
 	public $menuChoices = array (
 		'menudata' => array (
 			array ('name' => '<span class="glyphicon glyphicon-home"></span>', 'link' => '/'),
-			array ('name' => 'Documentation', 'link' => 'https://www.codeigniter.com/user_guide'),
-			array ('name' => 'Login', 'link' => '/ci4gate/public/index.php/secure')
-		)
+			array ('name' => 'CI Documentation', 'link' => 'https://www.codeigniter.com/user_guide'),
+			array ('name' => 'Change Password', 'link' => '/secure/changepassword'),
+			array ('name' => 'Logout', 'link' => '/secure/logout')		)
 	);
 
 	/*

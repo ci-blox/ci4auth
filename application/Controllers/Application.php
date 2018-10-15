@@ -10,7 +10,7 @@ use PHPAuth\Auth as PHPAuth;
 class Application extends \CodeIgniter\Controller
 {
 	protected $session; // session
-	protected $data = array (); // parameters for view components
+	protected $data = array(); // parameters for view components
 	protected $id;   // identifier for our content
 	protected $isSecure = false; // set to true if login needed
 	protected $auth, $authconfig;

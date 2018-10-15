@@ -3,23 +3,31 @@
 
 class Secure extends Application
 {
-	/**
-	 * Constructor
-     */
-	public function __construct()
-    {
-		$this->isSecure = true;
-        parent::init();
-    }
-	
-	public function index()
-	{
-	if (!$this->getCurrentUser())
-	return redirect()->to('/secure/login');
-	
-	$this->data = array();
-	$this->data['title'] = 'Demo';
-	
+/**
+ * Constructor
+ */
+public function __construct()
+{
+	$this->isSecure = true;
+	parent::init();
+	$this->data['title'] = 'Demo Secure Area';
+	$this->data['pagetitle'] = 'CodeIgniter 4 Demo Secure Area';
+}
+
+/**
+ * index - secure area home
+ *
+ * @return void
+ */
+public function index()
+{
+	$curruser = $this->getCurrentUser();
+	if (!$curruser)
+		return redirect()->to('/secure/login');
+	$this->data['viewdata'] = array();
+	$this->data['viewdata']['curruser'] = $curruser;
+	$this->data['pagebody'] = 'welcome_secure';
+	$this->render();
 }
 
 /**
@@ -43,7 +51,7 @@ public function login()
 			// Something went wrong, display error message
 			$this->data['viewdata'] = array();
 			$this->data['viewdata']['msg'] = $result['message'];
-			$this->data['pagetitle'] = 'Login - CodeIgniter 4 Demo';
+			$this->data['pagetitle'] = 'Login - ' . $this->data['pagetitle'];
 			return view('secure/login', $this->data);				
 		} else {
 			// Logged in successfully, set cookie, display success message
@@ -52,14 +60,12 @@ public function login()
 			$authconfig = (object)$cfg->authconfig;			
 			setcookie($authconfig->cookie_name, $result['hash'], $result['expire'], 
 			$authconfig->cookie_path, $authconfig->cookie_domain, $authconfig->cookie_secure, $authconfig->cookie_http);
-			$this->data['pagetitle'] = 'CodeIgniter 4 Demo Secure Area';
-			$this->data['pagebody'] = 'welcome_secure';
-			$this->render();
+			return redirect()->to('/secure/');
 		}				
-			}
-			$this->data['pagetitle'] = 'CodeIgniter 4 Demo Secure Area';
-			return view('secure/login', $this->data);
-		}
+	}
+	else
+		return view('secure/login', $this->data);
+	}
 		
 		/**
 		 * register
@@ -68,7 +74,6 @@ public function login()
 		 */
 		public function register()
 		{
-			$this->data = array();
 			$email = false;
 			$password = false;
 			$confirm_password = false;
@@ -99,7 +104,6 @@ public function login()
             if ($result['error']) {
                 // if registration not complete
                 $output = json_encode(array("type" => 1, "result" => $result['message']));
-                $this->data['viewdata'] = array();
 				$this->data['viewdata']['msg'] = $result['message'];
 				
 
@@ -112,12 +116,13 @@ public function login()
             } else {
                 $uid = $this->auth->getUID($email);
                 $output = json_encode(array("type" => 0, "result" => $result['message']));
-                redirect()->to('/secure/login');
+                return redirect()->to('/secure/login');
             }
             $registration = false;
         }
 		
-		$this->data['pagetitle'] = 'Register - CodeIgniter 4 Demo Secure Area';
+		$this->data['pagetitle'] = 'Register - ' . $this->data['title'];
+		$this->data['title'] = 'Register - ' . $this->data['title'];
         return view('secure/register', $this->data);
 //    secure/register';
 
@@ -130,7 +135,6 @@ public function login()
 	 */
 	public function forgot()
     {
-		$this->data = array();
 		$email = false;
 		if (isset($_POST['username'])) {		
 			$email = filter_var($this->request->getPost('username'), FILTER_SANITIZE_STRING);	
@@ -139,15 +143,14 @@ public function login()
 				// Something went wrong, display error message
 				$this->data['viewdata'] = array();
 				$this->data['viewdata']['msg'] = $result['message'];
-				$this->data['pagetitle'] = 'CodeIgniter 4 Demo Login<br>id demo pw test1';
+				$this->data['title'] = 'Forgot Password - ' . $this->data['title'];
 				return view('secure/forgot', $this->data);	
 			}
 			else
 			{
-				redirect()->to('/secure/login');
+				return redirect()->to('/secure/login');
 			}
 		}
-	   $this->data['pagetitle'] = 'CodeIgniter 4 Demo Secure Area';
         return view('secure/forgot', $this->data);
 	}
 	
@@ -158,8 +161,7 @@ public function login()
 	 */
 	public function changepassword()
     {
-		$this->data = array();
-		$this->data['pagetitle'] = 'Change Password - CodeIgniter 4 Demo';
+		$this->data['pagetitle'] = 'Change Password - ' . $this->data['pagetitle'] ;
         if (isset($_POST['password'])) {
             $uid = $this->auth->getSessionUID($this->auth->getSessionHash());
             $oldpassword = $this->request->getPost('old_password');
@@ -170,13 +172,29 @@ public function login()
 				// Something went wrong, display error message
 				$this->data['viewdata'] = array();
 				$this->data['viewdata']['msg'] = $result['message'];
-				return view('secure/changepassword', $this->data);	
 			}
 			else
 			{
-				redirect()->to('/secure/login');
+				return redirect()->to('/secure/login');
 			}
 		}
-        return view('secure/changepassword', $this->data);
-    }
+		$this->data['pagebody'] = 'secure/changepassword';
+		$this->render();
+	}
+
+	/**
+	 * logout
+	 *
+	 * @return void
+	 */
+	public function logout()
+	{
+		$cfg = new \Config\Authenticator();			
+		$authconfig = (object)$cfg->authconfig;			
+		if(isset($authconfig->cookie_name)) {
+			setcookie($authconfig->cookie_name, '', time() - 3600,"/",""); // empty value and old timestamp
+		}
+		return redirect()->to('/secure/login');
+
+	}
 }
