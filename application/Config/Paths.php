@@ -19,7 +19,7 @@ class Paths
 	 * Include the path if the folder is not in the same directory
 	 * as this file.
 	 */
-	public $systemDirectory = 'system';
+	public $systemDirectory = 'vendor/codeigniter4/framework/system';
 
 	/*
 	 *---------------------------------------------------------------
@@ -34,7 +34,7 @@ class Paths
 	 *
 	 * NO TRAILING SLASH!
 	 */
-	public $applicationDirectory = 'application';
+	public $applicationDirectory = './Application';
 
 	/*
 	 * ---------------------------------------------------------------

@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": ">=7.1",
-        "codeigniter4/framework": "master",
+        "codeigniter4/framework": "dev",
     	"roave/security-advisories": "dev-master",
         "phpauth/phpauth": "^1.1"
     },
