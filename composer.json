@@ -1,25 +1,37 @@
 {
-    "description": "The CodeIgniter framework v4",
-    "name": "codeigniter4/framework",
+    "description": "Starter for CodeIgniter framework v4 with ci4auth",
+    "name": "ci-blox/ci4auth",
     "type": "project",
-    "homepage": "https://codeigniter.com",
+    "homepage": "https://github.com/ci-blox/ci4auth",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "bobbo",
+            "email": "boblennes@msn.com"
+        }
+    ],
     "support": {
-        "forum": "http://forum.codeigniter.com/",
+        "forum": "https://github.com/ci-blox/ci4auth/issues",
         "slack": "https://codeigniterchat.slack.com",
-        "source": "https://github.com/bcit-ci/CodeIgniter4"
+        "source": "https://github.com/ci-blox/ci4auth"
     },
     "autoload": {
         "psr-4": {
-            "CodeIgniter\\": "system/",
-            "Psr\\Log\\": "system/ThirdParty/PSR/Log/"
-        }
+            "CodeIgniter\\": "./vendor/codeigniter4/framework/system/",
+            "Psr\\Log\\": "./vendor/codeigniter4/framework/system/ThirdParty/PSR/Log/",
+            "InstallCI4\\": "./install/",        
+            "Config\\": "./Application/Config/"        }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/bcit-ci/CodeIgniter4"
+        }
+    ],
     "require": {
         "php": ">=7.1",
-        "zendframework/zend-escaper": "^2.5",
-        "kint-php/kint": "^2.1",
-        "ext-intl": "*",
+        "codeigniter4/framework": "master",
+    	"roave/security-advisories": "dev-master",
         "phpauth/phpauth": "^1.1"
     },
     "require-dev": {
@@ -28,9 +40,14 @@
         "codeigniter4/codeigniter4-standard": "^1.0"
     },
     "scripts": {
-        "post-update-cmd": [
+        "post-install-cmd": [
             "composer dump-autoload",
-            "CodeIgniter\\ComposerScripts::postUpdate"
+            "InstallCI4\\ComposerScripts::postInstall"
+        ],
+        "post-update-cmd": [
+            "composer dump-autoload"
         ]
-    }
+
+    },
+    "minimum-stability": "dev"
 }
