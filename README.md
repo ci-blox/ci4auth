@@ -4,18 +4,19 @@
 1. **CodeIgniter 4** (in alpha release) is a PHP full-stack web framework that is light, fast, flexible, and secure. 
 More information can be found at the [official site](http://codeigniter.com).
 
-2. ** PHPAuth ** is a secure, well-rounded PHP Authentication class [documemtation here](https://github.com/PHPAuth/PHPAuth/wiki/Class-Methods).
+2. **PHPAuth** is a secure, well-rounded PHP Authentication class [documemtation here](https://github.com/PHPAuth/PHPAuth/wiki/Class-Methods).
 
-3. ** Bootstrap 4 **, with basic themes, prebuilt authentication screens and secure area ( /secure )
+3. **Bootstrap 4**, with basic themes, prebuilt authentication screens and secure area ( /secure )
 
 ## Installation Notes
 (better instructions coming soon)
 - clone this library
 - run composer install
-- note: currently we include CI4 alpha release
+- note: we DO NOT include CI4, composer WILL INSTALL IT NOW
 - migrations included to create tables: once your database and config are setup, 
   then run the Auth migrations:  php spark migrate:latest -all
-
+- run
+ php -S localhost:8080 -t public
 
 ## Contributing
 We **are** accepting contributions from the community.
