@@ -12,7 +12,7 @@ More information can be found at the [official site](http://codeigniter.com).
 (better instructions coming soon)
 - clone this library
 - run composer install
-- note: currently we include CI4 alpha release
+- note: we DO NOT include CI4, composer WILL INSTALL IT NOW
 - migrations included to create tables: once your database and config are setup, 
   then run the Auth migrations:  php spark migrate:latest -all
 
