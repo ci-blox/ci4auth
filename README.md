@@ -10,12 +10,13 @@ More information can be found at the [official site](http://codeigniter.com).
 
 ## Installation Notes
 (better instructions coming soon)
+- this library/framework uses the "Composer install" method. 
 - clone this library
 - run composer install
-- note: we DO NOT include CI4, composer WILL INSTALL IT NOW
-- migrations included to create tables: once your database and config are setup, 
+- note: we DO NOT include CI4, composer WILL INSTALL IT
+- migrations included to create tables: once your database and config are set up, 
   then run the Auth migrations:  php spark migrate:latest -all
-- run
+- to run, use
  php -S localhost:8080 -t public
 
 ## Contributing
